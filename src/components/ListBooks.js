@@ -11,6 +11,7 @@ class ListBooks extends React.Component {
 
   render() {
     const books = this.props.books
+    const filterBy = shelf => books.filter((book) => (book.shelf === shelf))
     return (
       <div className="list-books">
         <div className="list-books-title">
@@ -18,10 +19,9 @@ class ListBooks extends React.Component {
         </div>
         <div className="list-books-content">
           <div>
-            <BookShelf books={books.filter((book) => (book.shelf === "currentlyReading"))} title="Currently Reading" onChangeShelf={this.props.onChange} />
-
-            <BookShelf books={books.filter((book) => (book.shelf === "read"))} title="Read" onChangeShelf={this.props.onChange} />
-            <BookShelf books={books.filter((book) => (book.shelf === "wantToRead"))} title="Want to Read" onChangeShelf={this.props.onChange} />
+            <BookShelf books={filterBy('wantToRead')}  title="Want to Read" onChangeShelf={this.props.onChange} />
+            <BookShelf books={filterBy('currentlyReading')}  title="Currently Reading" onChangeShelf={this.props.onChange} />
+            <BookShelf books={filterBy('read')}  title="Read" onChangeShelf={this.props.onChange} />
           </div>
         </div>
         <div className="open-search">
@@ -33,7 +33,7 @@ class ListBooks extends React.Component {
         </div>
       </div>
     )
-  } 
-}  
+  }
+}
 
 export default ListBooks

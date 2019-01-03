@@ -1,7 +1,8 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
+import noImage from '../icons/no-image.png'
 
-class Book extends React.Component {
+class Book extends React.PureComponent {
     static propTypes = {
         book: PropTypes.object.isRequired,
         onUpdate: PropTypes.func.isRequired
@@ -13,13 +14,19 @@ class Book extends React.Component {
 
     render() {
         const book = this.props.book
+        const image =
+            book.imageLinks && book.imageLinks.thumbnail
+                ? book.imageLinks.thumbnail
+                : noImage
+        const title = book.title ? book.title : 'No title available'
+        const shelf = book.shelf ? book.shelf : "none"
         return (
             <li>
                 <div className="book">
                     <div className="book-top">
-                        <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: `url("${book.imageLinks.thumbnail}")` }}></div>
+                        <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: `url("${image}")` }}></div>
                         <div className="book-shelf-changer">
-                            <select onChange={this.change} value={book.shelf}>
+                            <select onChange={this.change} value={shelf}>
                                 <option value="move" disabled>Move to...</option>
                                 <option value="currentlyReading">Currently Reading</option>
                                 <option value="wantToRead">Want to Read</option>
@@ -28,7 +35,7 @@ class Book extends React.Component {
                             </select>
                         </div>
                     </div>
-                    <div className="book-title">{book.title}</div>
+                    <div className="book-title">{title}</div>
                     <div className="book-authors">{book.authors}</div>
                 </div>
             </li>
