@@ -27,7 +27,7 @@ class SearchPage extends React.Component {
       BooksAPI.search(query, 10).then((searchResult) => {
         let results = []
         searchResult.forEach(element => {
-          const myBook = this.props.myBooks.filter((book) => (book.id === element.id))[0]
+          const myBook = this.props.myBooks.find((book) => (book.id === element.id))
           element.shelf = myBook? myBook.shelf: "none"
           results.push(element)
         })
