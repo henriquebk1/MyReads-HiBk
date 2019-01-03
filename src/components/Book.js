@@ -18,8 +18,8 @@ class Book extends React.PureComponent {
             book.imageLinks && book.imageLinks.thumbnail
                 ? book.imageLinks.thumbnail
                 : noImage
-        const title = book.title ? book.title : 'No title available'
-        const shelf = book.shelf ? book.shelf : "none"
+        const title = book.title || 'No title available'
+        const shelf = book.shelf || "none"
         return (
             <li>
                 <div className="book">
@@ -36,7 +36,7 @@ class Book extends React.PureComponent {
                         </div>
                     </div>
                     <div className="book-title">{title}</div>
-                    <div className="book-authors">{book.authors}</div>
+                    <div className="book-authors">{book.authors && book.authors.join(', ')}</div>
                 </div>
             </li>
         )

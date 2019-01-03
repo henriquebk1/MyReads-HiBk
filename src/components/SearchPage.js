@@ -9,6 +9,14 @@ class SearchPage extends React.Component {
     books: [],
     query: ''
   }
+  constructor(props) {
+    super(props)
+    this.state = {
+      books: [],
+      query: '',
+      myBooks: props.myBooks
+    }
+  }
 
   static propTypes = {
     onChange: PropTypes.func.isRequired,
@@ -22,9 +30,15 @@ class SearchPage extends React.Component {
     this.searchBooks(event.target.value)
   }
 
-  searchBooks = (query) => {
+  searchBooks = (query, myBooks) => {
     if(query.length > 0){
       BooksAPI.search(query, 10).then((b) => {
+        let bs = []
+        b.forEach(element => {
+          const myBook = this.state.myBooks.filter((book) => (book.id === element.id))[0]
+          element.shelf = myBook? myBook.shelf: "none"
+          bs.push(element)
+        })
         this.setState({
           books: b
         })
